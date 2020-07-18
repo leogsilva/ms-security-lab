@@ -1,7 +1,7 @@
 #!/bin/bash
 $ISTIO_HOME/bin/istioctl manifest apply --set values.kiali.enabled=true --set values.global.mtls.auto=true --set values.global.mtls.enabled=false --set values.gateways.istio-ingressgateway.type=NodePort --set values.gateways.istio-egressgateway.type=NodePort
 
-cat > ingressgateway.yaml <<EOF
+cat <<EOF | kubectl apply -f - 
 apiVersion: v1
 kind: Service
 metadata:
@@ -46,4 +46,3 @@ spec:
     istio: ingressgateway
   type: NodePort
 EOF
-kubectl apply -f ingressgateway.yaml
